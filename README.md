@@ -1,4 +1,12 @@
-# Environment Setup
+## Description
+This respository shows a high level solution and code structure when doing API testing using SpecFlow and C#.
+
+Additional improvements can be implemented in the future such as the list below: 
+- Implementing external data source such as csv, excel etc. 
+- Adding database verification to test data integrity
+- Implementing reporting capability such as Extent reports and others. 
+
+## Initial Setup
 During development to provide environment variables to the solution create a file named env.json at the root of the project folder. For example:
 
 **{
@@ -8,8 +16,8 @@ During development to provide environment variables to the solution create a fil
 
 ## Answers to the questions in the case study document 
 
-**Question 1**: Following are the possible webservices and test cases that I have identified based on the design document: 
- Please note that the response codes are based on my assumptions and may still be changed depending on the API contract. 
+**Question 1**: Following are the possible webservices and UI test cases that I have identified based on the design document: 
+ Please note that the response codes are based on my assumptions and may still change depending on the API contract. 
 
  1. Registration (has a POST webservice and UI component)
 	 
@@ -70,13 +78,15 @@ During development to provide environment variables to the solution create a fil
 - If incorrect url path is used to send the request, error 404 should be received.
 
 
- 8. Order Webservice  (has a POST webservice and UI component)
+ 8. Order Webservice  (has a POST, UPDATE and DELETE webservices and UI component)
 
 - The Api accepts order details ie. movie id, seat_ids, customer information, promo id, total amount
 - Proper data error validations should also be available in the UI. ie. verify for the completeness and formats of data
+- Database verification can also be done as needed. 
 - The Api returns 200 if all data mandatory data are supplied
 - if incomplete data is supplied, error 400 should be returned. 
 - If incorrect url path is used to send the request, error 404 should be received.
+- the same process goes when updating and cancelling an order. 
 
  9. Payment and SMS Webservice (POST Request) - assuming that there are third-party gateways involved for payment and SMS Webservice passing of data should be secured. 
  
@@ -85,3 +95,6 @@ During development to provide environment variables to the solution create a fil
 
 **Question 3**: 
 The best approach would be to Stubs to simulate the responses from the third-party payment gateway. This way we will be able to test our own application with no dependency on the third-party gateway. 
+
+**Bonus Question**:
+For Event Driven model, I will include the test cases related to Order processing. In this process, the API calls, depending on which state they are in, can be published to different topics and a consumer routes these calls to specific queues. A listener to each queue will then pick up the messages and the application will start processing. Tools such as Kafka and ActiveMQ can be used for this purpose.   
